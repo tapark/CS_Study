@@ -30,21 +30,21 @@ select * from client where name='anjinma' and password='' or '1'='1'
 SQL UNION이란? 여러개의 SQL문을 합쳐 하나의 SQL문으로 만들어주는 방법이다.
 UNION과 UNION ALL로 나뉘는데 중복 값을 제외 하고 안하고의 차이다.
 UNION은 중복 값을 제외하고 UNION ALL은 제외 하지 않고 전체를 합친다.
-
-​select name from classa
+~~~SQL
+select name from classa
 union
 select name from classb;
-
+~~~
 하게 되면 클래스 A와 클래스 B 이름들이 합쳐져서 출력된다. (중복된 이름을 제외하고)
 UNION으로 합쳐지는 두 테이블은 컬럼 갯수가 일치해야만 오류가 나지 않는다.
-
+~~~SQL
 ​[외부 입력]
 ID: test' UNION SELECT 1,1 --
 PW: anything
 
 ​[실행 쿼리]
 SELECT * FROM users WHERE ID='test' UNION SELECT 1,1 -- and PW='anything'
-
+~~~
 ​실행 쿼리대로 하면 users 테이블에 등록된 id와 pw 목록을 전부 조회할 수 있게 된다.
 
 MySQL에는 information_schema라는 DB가 있다.
