@@ -12,8 +12,13 @@ DROP TABLE students;
 ~~~
 첫 번째 줄에서는 Robert라는 학생이 입력되었지만, 두 번째 줄에서 학생들의 데이터가 있는 테이블을 제거한다. 그리고 세 번째에서는 뒤에 오는 내용을 모두 주석 처리한다. 결과적으로 ‘모든 학생 기록을 삭제한다.’라는 뜻의 명령문이 완성된다.
 
-<참고>
-![웹공격 동향보고서](https://user-images.githubusercontent.com/67908647/118691284-e1782880-b843-11eb-940f-44a3d0244bfc.jpg)
+<참고>  
+![웹공격 동향보고서](https://user-images.githubusercontent.com/67908647/118691284-e1782880-b843-11eb-940f-44a3d0244bfc.jpg)  
+무었인지는 알고가자!
+1. Cross Site Scripting : 악의적인 명령어를 front(javaScript)에 입력
+2. File Upload : 웹개발 환경에 맞는 확장자를 가진 악성파일을 업로드(.php, .jsp, .asp .html 등)
+3. Directory Traversal : 웹사이트 상위 디렉토리에 접근하는 방법(42.kr/../../../etc/passwd)
+4. Stealth Commanding : 악의적인 명령어를 server-side에 입력
 
 
 ### Error based SQL Injection - 논리적 에러를 이용한 SQL Injection
