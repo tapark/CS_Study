@@ -27,3 +27,9 @@
 2. ALTER VIEW문을 사용할 수 없다. 즉 뷰의 정의를 변경할 수 없다.
 3. 뷰로 구성된 내용에 대한 삽입, 삭제, 갱신, 연산에 제약이 따른다.
  - 삽입, 삭제, 갱신이 원래 테이블에 영향을 미치기떄문에 기본키로 정의되어있지 않은 데이터의 경우 에러가 발생한다.
+
+### 뷰의 생성(예시)
+![뷰의생성](https://user-images.githubusercontent.com/67908647/118691107-b1c92080-b843-11eb-97dd-2df2651581f5.png)
+![뷰1](https://user-images.githubusercontent.com/67908647/118691108-b1c92080-b843-11eb-80c8-f36560344965.png)
+![뷰2](https://user-images.githubusercontent.com/67908647/118691096-afff5d00-b843-11eb-8e54-ec9231dc39ce.png)
+![뷰3](https://user-images.githubusercontent.com/67908647/118691106-b1308a00-b843-11eb-970f-9667913286f8.png)
