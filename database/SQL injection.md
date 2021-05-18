@@ -1,11 +1,11 @@
 # SQL Injection
 SQL 인젝션(SQL 삽입, SQL 주입으로도 불린다)은 코드 인젝션의 한 기법으로 클라이언트의 입력값을 조작하여 서버의 데이터베이스를 공격할 수 있는 공격방식을 말한다. 주로 사용자가 입력한 데이터를 제대로 필터링, 이스케이핑하지 못했을 경우에 발생한다.
 
-~~SQL
+~~~SQL
 INSERT INTO students (이름) VALUES ('학생 이름');
 ~~~
 여기서 Robert'); DROP TABLE students;-- 을 "학생 이름" 자리에 넣을 경우 다음과 같은 명령문이 된다.
-~~SQL
+~~~SQL
 INSERT INTO students (이름) VALUES ('Robert');
 DROP TABLE students;
 --');
@@ -16,12 +16,12 @@ DROP TABLE students;
 
 ### Error based SQL Injection - 논리적 에러를 이용한 SQL Injection
 앞서 예를 들어 설명한 기법이다. 해당 기법으로 SQL 인젝션에 대한 기본을 설명하는게 일반적이다.
-
+~~~SQL
 ​[로그인 예]
 select * from client where name='anjinma' and password='12345'
 ↓
 select * from client where name='anjinma' and password='' or '1'='1'
-
+~~~
 ' or '1'='1를 넣어서 1과 1이 같으면 참이므로 1=1 참이다. or 은 앞에 값과 뒤에 값 중 하나라도 참이면 참이므로 이 구문은 참이 되어 로그인에 성공하게 된다.
 
 ​
