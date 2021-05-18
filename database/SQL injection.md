@@ -70,7 +70,9 @@ sleep(5) - 5초 위에서 하던 SQL 구문에 해당 구문을 넣어주면 된
 1. 입력값 검증
 사용자의 입력이 DB Query에 동적으로 영향을 주는 경우 입력된 값이 개발자가 의도한 값(요효값) 인지 검증합니다.
 ~~~
-/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, union, select, drop, update, from, where, join, substr, user_tables, user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
+/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, 
+union, select, drop, update, from, where, join, substr, user_tables,
+user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
 ~~~
 2. 저장 프로시저 사용
 저장 프로시저는 사용하자고 하는 Query에 미리 형식을 지정하는 것을 말합니다. 지정된 형식의 데이터가 아니면 Query가 실행되지 않기 때문에 보안성을 크게 향상시킵니다.
