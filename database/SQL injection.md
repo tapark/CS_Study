@@ -1,62 +1,52 @@
 # SQL Injection
 SQL 인젝션(SQL 삽입, SQL 주입으로도 불린다)은 코드 인젝션의 한 기법으로 클라이언트의 입력값을 조작하여 서버의 데이터베이스를 공격할 수 있는 공격방식을 말한다. 주로 사용자가 입력한 데이터를 제대로 필터링, 이스케이핑하지 못했을 경우에 발생한다.
 
-~~~SQL
+~~SQL
 INSERT INTO students (이름) VALUES ('학생 이름');
 ~~~
 여기서 Robert'); DROP TABLE students;-- 을 "학생 이름" 자리에 넣을 경우 다음과 같은 명령문이 된다.
-~~~SQL
+~~SQL
 INSERT INTO students (이름) VALUES ('Robert');
 DROP TABLE students;
 --');
 ~~~
 첫 번째 줄에서는 Robert라는 학생이 입력되었지만, 두 번째 줄에서 학생들의 데이터가 있는 테이블을 제거한다. 그리고 세 번째에서는 뒤에 오는 내용을 모두 주석 처리한다. 결과적으로 ‘모든 학생 기록을 삭제한다.’라는 뜻의 명령문이 완성된다.
 
-<참고>  
-![웹공격 동향보고서](https://user-images.githubusercontent.com/67908647/118691284-e1782880-b843-11eb-940f-44a3d0244bfc.jpg)  
-무었인지는 알고가자!
-1. Cross Site Scripting : 악의적인 명령어를 front(javaScript)에 입력
-2. File Upload : 웹개발 환경에 맞는 확장자를 가진 악성파일을 업로드(.php, .jsp, .asp .html 등)
-3. Directory Traversal : 웹사이트 상위 디렉토리에 접근하는 방법(42.kr/../../../etc/passwd)
-4. Stealth Commanding : 악의적인 명령어를 server-side에 입력
 
 
-### Error based SQL Injection - 논리적 에러를 이용한 SQL Injection
+### Error based SQL Injection - 논리적 에러를 이용한 SQL 인젝션
 앞서 예를 들어 설명한 기법이다. 해당 기법으로 SQL 인젝션에 대한 기본을 설명하는게 일반적이다.
-~~~SQL
+
 ​[로그인 예]
 select * from client where name='anjinma' and password='12345'
 ↓
 select * from client where name='anjinma' and password='' or '1'='1'
-~~~
+
 ' or '1'='1를 넣어서 1과 1이 같으면 참이므로 1=1 참이다. or 은 앞에 값과 뒤에 값 중 하나라도 참이면 참이므로 이 구문은 참이 되어 로그인에 성공하게 된다.
 
 ​
-### UNION based SQL Injection - UNION 명령어를 이용한 SQL Injection
+### UNION based SQL Injection = UNION 명령어를 이용한 SQL Injection
 
 SQL UNION이란? 여러개의 SQL문을 합쳐 하나의 SQL문으로 만들어주는 방법이다.
 UNION과 UNION ALL로 나뉘는데 중복 값을 제외 하고 안하고의 차이다.
 UNION은 중복 값을 제외하고 UNION ALL은 제외 하지 않고 전체를 합친다.
-~~~SQL
-select name from classa
+
+​select name from classa
 union
 select name from classb;
-~~~
 하게 되면 클래스 A와 클래스 B 이름들이 합쳐져서 출력된다. (중복된 이름을 제외하고)
 UNION으로 합쳐지는 두 테이블은 컬럼 갯수가 일치해야만 오류가 나지 않는다.
-~~~SQL
+
 ​[외부 입력]
 ID: test' UNION SELECT 1,1 --
 PW: anything
 
 ​[실행 쿼리]
 SELECT * FROM users WHERE ID='test' UNION SELECT 1,1 -- and PW='anything'
-~~~
-​실행 쿼리대로 하면 users 테이블에 등록된 id와 pw 목록을 전부 조회할 수 있게 된다.
 
-MySQL에는 information_schema라는 DB가 있다.
+​실행 쿼리대로 하면 users 테이블에 등록된 id와 pw 목록을 전부 조회할 수 있게 된다.
 ​
-### Blind SQL Injection - 참 or 거짓에 대한 반응을 이용한 SQL Injection
+### Blind SQL Injection - Boolean based Blind SQL Injection
 
 평범한 SQL 삽입과 같이 원하는 데이터를 가져올 쿼리를 삽입하는 기술이다. 이것은 웹에서 SQL 삽입에 취약하나 데이터베이스 메시지가 공격자에게 보이지 않을 때 사용한다. 하지만 평범한 SQL 삽입과 다른점은 평범한 SQL 삽입은 쿼리를 삽입하여 원하는 데이터를 한번에 얻어낼 수 있는 데에 비해 Blind SQL 삽입은 참과 거짓, 쿼리가 참일때와 거짓일 때의 서버의 반응 만으로 데이터를 얻어내는 기술이다.
 
@@ -64,7 +54,7 @@ MySQL에는 information_schema라는 DB가 있다.
 
 Blind SQL 삽입은 위 두 함수를 이용하여 쿼리의 결과를 얻어, 한글자씩 끊어온 값을 아스키코드로 변환시키고 임의의 숫자와 비교하여 참과 거짓을 비교하는 과정을 거쳐가며 계속 질의를 보내어 일치하는 아스키코드를 찾아낸다. 그러한 과정을 반복하여 결과들을 조합하여 원하는 정보를 얻어냄으로써 공격을 이루어지게 한다. 많은 비교과정이 필요하기 때문에 악의적인 목적을 가진 크래커들은 Blind SQL 삽입 공격을 시도할때에 자동화된 툴을 사용하여 공격한다. 취약점이 발견된다면 순식간에 많은 정보들이 변조되거나 크래커의 손에 넘어가게 된다.
 
-### Time based SQL - 웹사이트의 응답시간을 이용한 SQL Injection
+### Blind SQL Injection - Time based SQL
 
 어떤 경우에는 응답의 결과가 항상 동일하여 해당 결과만으로 참과 거짓을 판별할 수 없는 경우가 있을 수 있다.
 이런 경우 시간을 지연시키는 쿼리를 주입(injection)하여 응답 시간의 차이로 참과 거짓 여부를 판별할 수 있다.
@@ -77,9 +67,7 @@ sleep(5) - 5초 위에서 하던 SQL 구문에 해당 구문을 넣어주면 된
 1. 입력값 검증
 사용자의 입력이 DB Query에 동적으로 영향을 주는 경우 입력된 값이 개발자가 의도한 값(요효값) 인지 검증합니다.
 ~~~
-/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, 
-union, select, drop, update, from, where, join, substr, user_tables,
-user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
+/*, –, ‘, “, ?, #, (, ), ;, @, =, *, +, union, select, drop, update, from, where, join, substr, user_tables, user_table_columns, information_schema, sysobject, table_schema, declare, dual,…
 ~~~
 2. 저장 프로시저 사용
 저장 프로시저는 사용하자고 하는 Query에 미리 형식을 지정하는 것을 말합니다. 지정된 형식의 데이터가 아니면 Query가 실행되지 않기 때문에 보안성을 크게 향상시킵니다.
